@@ -28,9 +28,9 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  const filePath = path.resolve(process.env.STATIC_DIR + "/index.html");
-  console.log(filePath)
-  res.sendFile(filePath);
+  // const filePath = path.resolve(process.env.STATIC_DIR + "/index.html");
+  const pathName = path.join(__dirname, 'client', 'index.html');
+  res.sendFile(pathName);
 });
 
 // Fetch the Checkout Session to display the JSON result on the success page
