@@ -5,11 +5,11 @@ const cors = require('cors');
 const bodyParser = require("body-parser");
 
 // Copy the .env.example in the root into a .env file in this folder
-const envFilePath = path.resolve(__dirname, './.env');
-const env = require("dotenv").config({ path: envFilePath });
-if (env.error) {
-  throw new Error(`Unable to load the .env file from ${envFilePath}. Please copy .env.example to ${envFilePath}`);
-}
+// const envFilePath = path.resolve(__dirname, './.env');
+// const env = require("dotenv").config({ path: envFilePath });
+// if (env.error) {
+//   throw new Error(`Unable to load the .env file from ${envFilePath}. Please copy .env.example to ${envFilePath}`);
+// }
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 app.use(cors())
@@ -149,6 +149,6 @@ app.post("/webhook", async (req, res) => {
 });
 
 const port = process.env.PORT || 4242
-app.listen(port, () => console.log(`Node server listening at http://localhost:${4242}/`));
+app.listen(port, () => console.log(`Node server listening at ${port}/`));
 
 
