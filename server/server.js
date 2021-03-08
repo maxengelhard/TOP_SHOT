@@ -192,6 +192,6 @@ app.listen(port, () => console.log(`Node server listening at ${port}/`));
 
 
 
-module.exports.handler = serverless(app);
+// module.exports.handler = serverless(app);
 
 
