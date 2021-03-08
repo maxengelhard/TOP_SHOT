@@ -1,8 +1,17 @@
+const serverless = require('serverless-http')
 const express = require("express");
 const app = express();
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require("body-parser");
+const AWS = require('aws-sdk')
+
+
+const myConfig = new AWS.Config({
+  region: 'us-east-2'
+});
+
+AWS.config = myConfig
 
 // Copy the .env.example in the root into a .env file in this folder
 const envFilePath = path.resolve(__dirname, './.env');
@@ -15,6 +24,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 app.use(cors())
 app.use(bodyParser.json())
 app.use(express.static(process.env.STATIC_DIR));
+app.use(express.urlencoded({ extended: true }));
 app.use(
   express.json({
     // We need the raw body to verify webhook signatures.
@@ -27,11 +37,20 @@ app.use(
   })
 );
 
+const USERS_TABLE = process.env.USERS_TABLE;
+const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
 app.get("/", (req, res) => {
   // const filePath = path.resolve(process.env.STATIC_DIR + "/index.html");
   const pathName = path.join(__dirname, 'client', 'index.html');
   res.sendFile(pathName);
 });
+
+
+// Create User endpoint
+app.post('/users', function (req, res) {
+  
+})
 
 // Fetch the Checkout Session to display the JSON result on the success page
 app.get("/checkout-session", async (req, res) => {
@@ -39,6 +58,27 @@ app.get("/checkout-session", async (req, res) => {
   const session = await stripe.checkout.sessions.retrieve(sessionId);
   const {customer} = session
   const {email} = session.customer_details
+  // if (typeof userId !== 'string') {
+  //   res.status(400).json({ error: '"userId" must be a string' });
+  // } else if (typeof email !== 'string') {
+  //   res.status(400).json({ error: '"email" must be a string' });
+  // }
+
+  const params = {
+    TableName: USERS_TABLE,
+    Item: {
+      id: customer,
+      email: email,
+    },
+  };
+
+  dynamoDb.put(params, (error) => {
+    if (error) {
+      console.log(error);
+      // res.status(400).json({ error: 'Could not create user' });
+    }
+    // res.json({ userId, name });
+  });
   res.send(session);
 });
 
@@ -88,9 +128,6 @@ app.get("/setup", (req, res) => {
   });
 });
 
-app.get('/users', (req,res) => {
-  res.json('hello')
-})
 
 app.post('/customer-portal', async (req, res) => {
   // For demonstration purposes, we're using the Checkout session to retrieve the customer ID. 
@@ -151,5 +188,10 @@ app.post("/webhook", async (req, res) => {
 
 const port = process.env.PORT || 4242
 app.listen(port, () => console.log(`Node server listening at ${port}/`));
+
+
+
+
+module.exports.handler = serverless(app);
 
 

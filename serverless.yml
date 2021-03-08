@@ -61,15 +61,15 @@ provider:
 
 functions:
   subscription-api:
-    handler: handler.hello
+    handler: server/server.handler
     events:
       - http:
           path: /
-          method: get
+          method: ANY
           cors: true
       - http:
           path: /{proxy+}
-          method: any
+          method: ANY
           cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
