@@ -5,6 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const bodyParser = require("body-parser");
 const AWS = require('aws-sdk')
+const sendRecipet = require('./sendReciept')
 
 
 const myConfig = new AWS.Config({
@@ -47,16 +48,11 @@ app.get("/", (req, res) => {
 });
 
 
-// Create User endpoint
-app.post('/users', function (req, res) {
-  
-})
-
 // Fetch the Checkout Session to display the JSON result on the success page
 app.get("/checkout-session", async (req, res) => {
   const { sessionId } = req.query;
   const session = await stripe.checkout.sessions.retrieve(sessionId);
-  const {customer} = session
+  const {id,customer,amount_total} = session
   const {email} = session.customer_details
   // if (typeof userId !== 'string') {
   //   res.status(400).json({ error: '"userId" must be a string' });
@@ -70,15 +66,27 @@ app.get("/checkout-session", async (req, res) => {
       id: customer,
       email: email,
     },
+    ReturnValues: 'ALL_OLD'
   };
 
-  dynamoDb.put(params, (error) => {
+  dynamoDb.put(params, (error,data) => {
     if (error) {
       console.log(error);
-      // res.status(400).json({ error: 'Could not create user' });
+      res.status(400).json({ error: 'Could not create user' });
     }
-    // res.json({ userId, name });
+    if (!data.Attributes) {
+    sendRecipet(email,customer,amount_total,process.env.DOMAIN+'/managebilling')
+    }
   });
+
+  // send out a receipt
+  // sendReciept = async (email,stripe_id,receipt_id,amount)
+  // const checkoutsession = await stripe.checkout.sessions.retrieve(sessionId);
+
+  // This is the url to which the customer will be redirected when they are done
+  // managing their billing with the portal.
+ 
+ 
   res.send(session);
 });
 
@@ -106,7 +114,6 @@ app.post("/create-checkout-session", async (req, res) => {
       success_url: `${domainURL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${domainURL}/canceled.html`,
     });
-
     res.send({
       sessionId: session.id,
     });
@@ -132,15 +139,15 @@ app.get("/setup", (req, res) => {
 app.post('/customer-portal', async (req, res) => {
   // For demonstration purposes, we're using the Checkout session to retrieve the customer ID. 
   // Typically this is stored alongside the authenticated user in your database.
-  const { sessionId } = req.body;
-  const checkoutsession = await stripe.checkout.sessions.retrieve(sessionId);
+  const { customerId } = req.body;
+  // const checkoutsession = await stripe.checkout.sessions.retrieve(sessionId);
 
   // This is the url to which the customer will be redirected when they are done
   // managing their billing with the portal.
   const returnUrl = process.env.DOMAIN;
 
   const portalsession = await stripe.billingPortal.sessions.create({
-    customer: checkoutsession.customer,
+    customer: customerId,
     return_url: returnUrl,
   });
 
@@ -185,6 +192,73 @@ app.post("/webhook", async (req, res) => {
 
   res.sendStatus(200);
 });
+
+app.get('/events', async (req,res) => {
+  try {
+       const subscriptions = await stripe.subscriptions.list();
+       const canceled = subscriptions.data.filter(obj => {
+         return obj.canceled_at
+       }).map(obj => obj.customer)
+      
+       // for each of the canceled customers clear out their names in the lambda function
+       res.json(canceled)
+  }
+  catch(error) {
+    console.log(error)
+  }
+})
+
+app.get('/managebilling', async (req,res) => {
+  try {
+    let root = __dirname.split('/')
+    root.pop()
+    root = root.join('/')
+    const pathName = path.join(root, 'client', 'billing.html');
+  res.sendFile(pathName);
+
+  }
+  catch(error) {
+    console.log(error)
+  }
+})
+
+app.post('/getusers', async (req,res) => {
+  try {
+    const {email,customerId} = req.body
+
+    // get the user
+    const params = {
+      TableName: USERS_TABLE,
+      Key: {
+        id: customerId
+      },
+    };
+  
+    dynamoDb.get(params, (error,data) => {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ error: 'Could not get user' });
+      } else {
+        // check to see if the email matches
+        if (data.Item) {
+        const dbEmail = data.Item.email
+        if (email ===dbEmail) {
+          res.json(customerId)
+        } else {
+          res.json({error: 'Email and Id Do Not Match'})
+        }
+      }
+        else {
+          res.json({error: 'Could Not Find Id'})
+        }
+      }
+    }); 
+    
+  }
+  catch(error){
+    console.log(error)
+  }
+})
 
 const port = process.env.PORT || 4242
 app.listen(port, () => console.log(`Node server listening at ${port}/`));

@@ -45,10 +45,10 @@ fetch("/setup")
   .then(function(json) {
     var publishableKey = json.publishableKey;
     var basicPriceId = json.basicPrice;
-    var proPriceId = json.proPrice;
 
     var stripe = Stripe(publishableKey);
     // Setup event handler to create a Checkout Session when button is clicked
+    if (document.getElementById('basic-plan-btn')) {
     document
       .getElementById("basic-plan-btn")
       .addEventListener("click", function(evt) {
@@ -61,6 +61,7 @@ fetch("/setup")
             .then(handleResult);
         });
       });
+    }
 
     // Setup event handler to create a Checkout Session when button is clicked
     // if there is a pro plan
@@ -77,3 +78,12 @@ fetch("/setup")
     //     });
     //   });
   });
+
+  // manage billing
+  const myhref = (urlEnding) => {
+    if (urlEnding==='/') {
+      document.location.href = '/'
+    } else {
+    window.location.href += urlEnding
+    }
+  }

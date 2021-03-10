@@ -2,15 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Stripe Checkout Sample</title>
-    <meta name="description" content="A demo of Stripe Payment Intents" />
-
+    <title>Manage Get Drop Now Billing</title>
+    <meta name="description" content="Customer Portal" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/global.css" />
     <!-- Load Stripe.js on your website. -->
     <script src="https://js.stripe.com/v3/"></script>
     <script src="./script.js" defer></script>
+    <script src='./success.js' defer></script>
   </head>
 
   <body>
@@ -18,9 +18,9 @@
     <div class="sr-root">
       <div class="sr-main">
         <header class="sr-header">
-          <div class="sr-header__logo"></div>
+          <div class="sr-header__logo" onclick="myhref('/')" style="cursor: pointer;""></div>
         </header>
-        <h1>Choose a collaboration plan</h1>
+        <h1>Manage Billing</h1>
 
         <div class="price-table-container">
           <section>
@@ -29,15 +29,18 @@
               width="120"
               height="120"
             />
-            <div class="name">Starter</div>
-            <div class="price">$18</div>
-            <div class="duration">per month</div>
-            <button id="basic-plan-btn">Select</button>
+            <form id="manage-billing-form-1">
+                Email<br>
+                <input type='text' name='email' id='email'value=''/>
+                Customer Id
+                <input type='text' name='customerId' id='customerId' value=''/>
+                <button>Manage Billing</button>
+            </form>
+           
           </section>
         </div>
       </div>
     </div>
     <div id="error-message" class="error-message"></div>
-    <div class='billing' onclick="myhref('managebilling')">Already Have An Account?</div>
   </body>
 </html>

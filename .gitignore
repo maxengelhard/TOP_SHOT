@@ -34,3 +34,6 @@ target/
 
 #serverless
 .serverless
+
+# zip files
+*.zip
