@@ -197,7 +197,7 @@ const reactivateEmail = () => {
 +`                <tr>`
 +`                  <td bgcolor="#FFECD1" align="center" style="padding: 30px 30px 30px 30px; border-radius: 4px 4px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >`
 +`                    <h2 style="font-size: 20px; font-weight: 400; color: #111111; margin: 0;">Need more help?</h2>`
-+`                    <p style="margin: 0;"><a href=${process.env.DOMAIN + '/help.html'} target="_blank" style="color: #FFA73B;">We&rsquo;re here, ready to talk</a></p>`
++`                    <p style="margin: 0;"><a href=${process.env.DOMAIN + 'help.html'} target="_blank" style="color: #FFA73B;">We&rsquo;re here, ready to talk</a></p>`
 +`                  </td>`
 +`                </tr>`
 +`            </table>`
@@ -222,15 +222,15 @@ const reactivateEmail = () => {
 +`                <td bgcolor="#f4f4f4" align="left" style="padding: 30px 30px 30px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" >`
 +`                  <p style="margin: 0;">`
 +`                    <a href=${process.env.DOMAIN} target="_blank" style="color: #111111; font-weight: 700;">Dashboard</a> -`
-+`                    <a href=${process.env.DOMAIN+'/billing.html'} target="_blank" style="color: #111111; font-weight: 700;">Billing</a> -`
-+`                    <a href=${process.env.DOMAIN + '/help.html'} target="_blank" style="color: #111111; font-weight: 700;">Help</a>`
++`                    <a href=${process.env.DOMAIN+'billing.html'} target="_blank" style="color: #111111; font-weight: 700;">Billing</a> -`
++`                    <a href=${process.env.DOMAIN + 'help.html'} target="_blank" style="color: #111111; font-weight: 700;">Help</a>`
 +`                  </p>`
 +`                </td>`
 +`              </tr>`
 +`              <!-- PERMISSION REMINDER -->`
 +`              <tr>`
 +`                <td bgcolor="#f4f4f4" align="left" style="padding: 0px 30px 30px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" >`
-+`                  <p style="margin: 0;">You received this email because you just signed up for a new account. If it looks weird, <a href=${process.env.DOMAIN + '/help.html'} target="_blank" style="color: #111111; font-weight: 700;">view it in your browser</a>.</p>`
++`                  <p style="margin: 0;">You received this email because you just signed up for a new account. If it looks weird, <a href=${process.env.DOMAIN + 'help.html'} target="_blank" style="color: #111111; font-weight: 700;">view it in your browser</a>.</p>`
 +`                </td>`
 +`              </tr>`
 +`              <!-- UNSUBSCRIBE -->`
