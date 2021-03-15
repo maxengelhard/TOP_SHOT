@@ -44,7 +44,7 @@ const sendReciept = async (email,customerId,amount,billing,updated) => {
       //     /* more items */
       //   ],
         ToAddresses: [
-          'mackw2019@gmail.com', // email
+          email, // email
           /* more items */
         ]
       },
