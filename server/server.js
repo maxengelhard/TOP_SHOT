@@ -112,8 +112,8 @@ app.post("/create-checkout-session", async (req, res) => {
         },
       ],
       // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
-      success_url: `${domainURL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${domainURL}/canceled.html`,
+      success_url: `${domainURL}success.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${domainURL}canceled.html`,
     });
     res.send({
       sessionId: session.id,
@@ -186,6 +186,10 @@ app.post("/webhook", async (req, res) => {
     eventType = req.body.type;
   }
 
+  if (eventType === "checkout.session.completed") {
+    console.log(`🔔  Payment received!`);
+  }
+
   const updateUser = async (column,value,email) => {
     const params = {
       TableName: USERS_TABLE,
@@ -217,21 +221,18 @@ app.post("/webhook", async (req, res) => {
     const {email,id} = user.Attributes
     const {amount} = data.object.plan
   sendRecipet(email,id,amount,process.env.DOMAIN+'managebilling','cancel')
-  } else if (data.previous_attributes.cancel_at && !data.object.cancel_at) { // this is for reactivating
+  } else if (data.previous_attributes && data.previous_attributes.cancel_at && !data.object.cancel_at) { // this is for reactivating
     const user = await updateUser('active',true)
     const {email,id} = user
     const {amount} = data.object.plan
     sendRecipet(email,id,amount,process.env.DOMAIN+'managebilling','reactivate')
-  } else if (data.previous_attributes.email !== data.object.email) { // change of email
+  } else if (data.previous_attributes && (data.previous_attributes.email !== data.object.email)) { // change of email
     const user = await updateUser('email','_',data.object.email)
     const {email,id} = user
     const amount = false
     sendRecipet(email,id,amount,process.env.DOMAIN+'managebilling','changeEmail')
-  }
+  } 
   
-  if (eventType === "checkout.session.completed") {
-    console.log(`🔔  Payment received!`);
-  }
 
   res.sendStatus(200);
 });
