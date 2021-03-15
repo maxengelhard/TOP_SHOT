@@ -17,7 +17,6 @@ const SESConfig = {
 const sendReciept = async (email,customerId,amount,billing,updated) => {
   const stringAmount = amount.toString()
   const prettyAmount = `$${stringAmount.slice(0,stringAmount.length-2)}.${stringAmount.slice(stringAmount.length-2)}`
-  
     // first check to see what we are sending out 
     let thisEmail = ''
     let subject = ''
@@ -44,7 +43,7 @@ const sendReciept = async (email,customerId,amount,billing,updated) => {
       //     /* more items */
       //   ],
         ToAddresses: [
-          email, // email
+          email // email
           /* more items */
         ]
       },
