@@ -2,6 +2,9 @@ const dotenv = require('dotenv')
 dotenv.config()
 const AWS = require('aws-sdk')
 const receiptHTML = require('./receiptHTML')
+const unsubscribed = require('./unsubscribed')
+const reactivateEmail = require('./reactivateEmail')
+const updateEmailAddress = require('./updateEmail')
 
 
 const SESConfig = {
@@ -11,11 +14,29 @@ const SESConfig = {
   region: 'us-east-2'
 }
 
-const sendReciept = async (email,customerId,amount,billing) => {
+const sendReciept = async (email,customerId,amount,billing,updated) => {
+  const stringAmount = amount.toString()
+  const prettyAmount = `$${stringAmount.slice(0,stringAmount.length-2)}.${stringAmount.slice(stringAmount.length-2)}`
+  
+    // first check to see what we are sending out 
+    let thisEmail = ''
+    let subject = ''
+  if (!updated) {
+    thisEmail = receiptHTML('Get Drop Now',customerId,prettyAmount,billing,'https://www.nbatopshot.com/')
+    subject = 'Thank you! Here is your receipt'
+  } else if (updated ==='cancel') {
+    thisEmail = unsubscribed() 
+    subject = `Cancel Confirmation`
+  } else if (updated ==='reactivate') {
+    thisEmail = reactivateEmail()
+    subject = `We're glad to have you back!`
+  } else if (updated ==='changeEmail') {
+    thisEmail = updateEmailAddress()
+    subject = `New Email Address`
+  }
     // get the user email address and stripe id
     // send it to them with the address
-    const stringAmount = amount.toString()
-    const prettyAmount = `$${stringAmount.slice(0,stringAmount.length-2)}.${stringAmount.slice(stringAmount.length-2)}`
+    
      const params = {
       Destination: { /* required */
       //   CcAddresses: [
@@ -31,7 +52,7 @@ const sendReciept = async (email,customerId,amount,billing) => {
         Body: { /* required */
           Html: {
            Charset: "UTF-8", // receiptHTML = (productName,receipt_id,amount,billingUrl, support_link,websiteScrape)
-           Data: receiptHTML('Get Drop Now',customerId,prettyAmount,billing,'https://www.nbatopshot.com/')
+           Data: thisEmail
           },
           // Text: {
           //  Charset: "UTF-8",
@@ -40,7 +61,7 @@ const sendReciept = async (email,customerId,amount,billing) => {
          },
          Subject: {
           Charset: 'UTF-8',
-          Data: 'Here is your reciept'
+          Data: subject
          }
         },
       Source: '"Get Drop Now" <getdropnow@gmail.com>', /* required */

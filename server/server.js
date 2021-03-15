@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const path = require('path');
 const cors = require('cors');
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 const AWS = require('aws-sdk')
 const sendRecipet = require('./sendReciept')
 
@@ -23,7 +23,7 @@ const env = require("dotenv").config({ path: envFilePath });
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 app.use(cors())
-app.use(bodyParser.json())
+// app.use(bodyParser.json())
 app.use(express.static(process.env.STATIC_DIR));
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -65,6 +65,7 @@ app.get("/checkout-session", async (req, res) => {
     Item: {
       id: customer,
       email: email,
+      active: true
     },
     ReturnValues: 'ALL_OLD'
   };
@@ -165,7 +166,6 @@ app.post("/webhook", async (req, res) => {
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event;
     let signature = req.headers["stripe-signature"];
-
     try {
       event = stripe.webhooks.constructEvent(
         req.rawBody,
@@ -186,6 +186,49 @@ app.post("/webhook", async (req, res) => {
     eventType = req.body.type;
   }
 
+  const updateUser = async (column,value,email) => {
+    const params = {
+      TableName: USERS_TABLE,
+      Key: {"id": data.object.customer ? data.object.customer: data.object.id},
+      UpdateExpression: `set ${column} = :x`,
+      ExpressionAttributeValues:{
+        ":x": email? email : value
+      },
+      ReturnValues: "ALL_NEW"
+    }
+    try {
+   return dynamoDb.update(params, (error,data) => {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ error: 'Could not update user' });
+      }
+    }).promise().then(result => result)
+  }
+  catch(error) {
+    console.log(error)
+  }
+  }
+  // we can also send out recipets
+  // const sendReciept = async (email,customerId,amount,billing,updated)  
+  // with this data update dynamo db
+  // if they cancel set active to false
+  if (data.object.cancel_at) {
+    const user = await updateUser('active',false)
+    const {email,id} = user.Attributes
+    const {amount} = data.object.plan
+  sendRecipet(email,id,amount,process.env.DOMAIN+'/managebilling','cancel')
+  } else if (data.previous_attributes.cancel_at && !data.object.cancel_at) { // this is for reactivating
+    const user = await updateUser('active',true)
+    const {email,id} = user
+    const {amount} = data.object.plan
+    sendRecipet(email,id,amount,process.env.DOMAIN+'/managebilling','reactivate')
+  } else if (data.previous_attributes.email !== data.object.email) { // change of email
+    const user = await updateUser('email','_',data.object.email)
+    const {email,id} = user
+    const amount = false
+    sendRecipet(email,id,amount,process.env.DOMAIN+'/managebilling','changeEmail')
+  }
+  
   if (eventType === "checkout.session.completed") {
     console.log(`🔔  Payment received!`);
   }
@@ -193,20 +236,7 @@ app.post("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
-app.get('/events', async (req,res) => {
-  try {
-       const subscriptions = await stripe.subscriptions.list();
-       const canceled = subscriptions.data.filter(obj => {
-         return obj.canceled_at
-       }).map(obj => obj.customer)
-      
-       // for each of the canceled customers clear out their names in the lambda function
-       res.json(canceled)
-  }
-  catch(error) {
-    console.log(error)
-  }
-})
+
 
 app.get('/managebilling', async (req,res) => {
   try {
