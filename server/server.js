@@ -220,7 +220,7 @@ app.post("/webhook", async (req, res) => {
     const user = await updateUser('active',false)
     const {email,id} = user.Attributes
     const {amount} = data.object.plan
-   // sendRecipet(email,id,amount,process.env.DOMAIN+'managebilling','cancel')
+   sendRecipet(email,id,amount,process.env.DOMAIN+'managebilling','cancel')
   } else if (data.previous_attributes && data.previous_attributes.cancel_at && !data.object.cancel_at) { // this is for reactivating
     const user = await updateUser('active',true)
     const {email,id} = user.Attributes
