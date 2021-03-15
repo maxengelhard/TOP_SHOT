@@ -1,6 +1,6 @@
-const path = require('path');
-const envFilePath = path.resolve(__dirname, './.env');
-const env = require("dotenv").config({ path: envFilePath });
+// const path = require('path');
+// const envFilePath = path.resolve(__dirname, './.env');
+// const env = require("dotenv").config({ path: envFilePath });
 
 const unsubscribed = () => {
 return  `<!DOCTYPE html>`
