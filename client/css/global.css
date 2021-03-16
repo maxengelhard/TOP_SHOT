@@ -68,6 +68,7 @@ left: 10%;
 
 }
 .sr-payment-summary {
+  margin-top: 200px;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -271,17 +272,22 @@ input[type="number"]::placeholder {
 }
 
 /* Buttons and links */
+#basic-plan-btn {
+  width: 20vw;
+  height: 5vh;
+  padding: auto;
+  margin-top: 16px;
+}
 button {
   background: var(--accent-color);
   border-radius: var(--radius);
   color: white;
   border: 0;
-  padding: 12px 16px;
-  margin-top: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   display: block;
+  font-size: 32px;
 }
 button:hover {
   filter: contrast(115%);
@@ -293,6 +299,14 @@ button:active {
 button:disabled {
   opacity: 0.5;
   cursor: none;
+}
+
+@media(min-width:1025px) {
+  #basic-plan-btn {
+    padding: 12px 12px;
+    font-size: 16px;
+    width: 10vw;
+  }
 }
 
 .sr-payment-form button,
@@ -358,6 +372,10 @@ pre {
     width: auto;
   }
 
+  .price-table-container section {
+    height: 500px;
+  }
+
 }
 
 /* Pasha styles – Brand-overrides, can split these out */
@@ -384,8 +402,8 @@ pre {
 }
 
 .sr-main h1 {
-  margin-top: 10px;
-  font-size: x-large;
+  padding-top: 20px;
+  font-size: 50px;
   color: #ffffff;
   font-weight: 600;
   margin-bottom: 32px;
@@ -397,6 +415,7 @@ pre {
   font-weight: 600;
   margin-bottom: 10px;
   text-align: center;
+  font-size: 36px;
 }
 
 .sr-main a {
@@ -410,15 +429,39 @@ pre {
 }
 
 .price-table-container section {
-  margin: auto;
+  margin: 50px auto;
   border-radius: 6px;
-  padding: 32px 28px;
+  padding: calc(35vh / 9);
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
+  width: 500px;
+  height: 45vh;
   background-color: #ffffff;
 }
+
+
+#index-img {
+  width: 240px;
+  height: 240px;
+}
+
+#billing-img {
+  width: 120px;
+  height: 120px;
+}
+
+@media(min-width:1025px) {
+  .price-table-container section {
+    height: 350px;
+    padding: 32px 28px;
+  }
+  #index-img {
+    width: 120px;
+    height: 120px;
+  }
+}
+
 
 .price-table-container section:first-of-type {
   border-top-right-radius: 0px;
@@ -453,7 +496,7 @@ pre {
 
 .price-table-container .price {
   color: #000000;
-  font-size: xx-large;
+  font-size: 60px;
   font-weight: 600;
   margin-bottom: 8px;
   margin-top: 8px;
@@ -462,8 +505,18 @@ pre {
 
 .price-table-container .duration {
   color: #969696;
-  font-size: smaller;
+  font-size: 40px;
   text-align: center;
+}
+
+@media(min-width:1025px) {
+  .price-table-container .price {
+    font-size: xx-large;
+  }
+  
+  .price-table-container .duration {
+    font-size: smaller;
+  } 
 }
 
 .error-message {
@@ -483,6 +536,8 @@ pre {
   background-color: white;
   border-radius: 16px;
   padding: 20px;
+  width: 85%;
+  margin-left: 8%;
 }
 
 /* todo: spinner/processing state, errors, animations */
@@ -650,24 +705,40 @@ input[type="number"]::-webkit-outer-spin-button {
   position: absolute;
   top: 5%;
   right: 5%;
-  padding: 5px;
   background-color: var(--green-dark);
   cursor: pointer;
   font-weight: bolder;
-
+  font-size: 16px;
+  padding: 12px 16px;
+    font-size: 16px;
+    width: 10vw;
 }
 .billing:hover {
   background-color: var(--green-mid);
 }
+
+
+
 
 form input {
   margin: 3px 0px;
 }
 
 main {
-  margin-top: 140px;
+  margin-top: 15vh;
 }
 
-@media (max-width: 850px) {
-  
+@media(min-width:1025) {
+  main {
+    margin-top: 140px;
+  }
+}
+
+#manage-billing-form {
+  margin-top: 25px;
+}
+
+#manage-billing-form button {
+  padding: 10px;
+  font-size: 12px;
 }
