@@ -253,6 +253,20 @@ app.get('/managebilling', async (req,res) => {
   }
 })
 
+app.get('/images', async (req,res) => {
+  try {
+    let root = __dirname.split('/')
+    root.pop()
+    root = root.join('/')
+    const pathName = path.join(root, 'client', 'images.html');
+  res.sendFile(pathName); 
+  }
+  catch(error) {
+    console.log(error)
+  }
+}
+)
+
 app.post('/getusers', async (req,res) => {
   try {
     const {email,customerId} = req.body

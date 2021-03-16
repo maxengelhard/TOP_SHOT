@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="css/global.css" />
     <!-- Load Stripe.js on your website. -->
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.864.0.min.js"></script>
     <script src="./script.js" defer></script>
     <script src='./success.js' defer></script>
+    <script src='./s3photos.js' defer></script>
   </head>
 
   <body>
@@ -20,14 +22,13 @@
         <header class="sr-header">
           <img width="120"
           height="120"
-          src='./img/logodope.png' onclick="myhref('/')" style="cursor: pointer;"" />
+          id='logo' onclick="myhref('/')" style="cursor: pointer;"" />
         </header>
         <h1 style="margin-top:120px">Manage Billing</h1>
 
         <div class="price-table-container">
           <section>
-            <img id='billing-img'
-              src="/img/baller.png"
+            <img id='index-img'
               width="120px"
               height="120px"
             />

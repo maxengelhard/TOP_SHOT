@@ -87,3 +87,10 @@ fetch("/setup")
     window.location.href += urlEnding
     }
   }
+
+
+
+
+
+
+  

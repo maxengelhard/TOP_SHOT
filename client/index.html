@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="css/global.css" />
     <!-- Load Stripe.js on your website. -->
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.864.0.min.js"></script>
+    <script type="text/javascript"></script>
     <script src="./script.js" defer></script>
+    <script src='./s3photos.js' defer></script>
   </head>
 
   <body>
@@ -18,7 +21,7 @@
     <div class="sr-root">
       <div class="sr-main">
         <header class="sr-header">
-          <img src='/img/logodope.png' 
+          <img id='logo' 
           width="120"
           height="120"/>
         </header>
@@ -30,7 +33,6 @@
         <div class="price-table-container">
           <section>
             <img id='index-img'
-              src="/img/baller.png"
             />
             <div class="price">$5</div>
             <div class="duration">per month</div>
