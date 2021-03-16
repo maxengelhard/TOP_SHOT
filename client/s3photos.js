@@ -32,6 +32,7 @@ const viewAlbum = (albumName) => {
 
       document.getElementById('index-img') ? document.getElementById('index-img').src = photos[1] : null
       document.getElementById('logo').src = photos[2]
+      document.getElementById('icon').href = photos[2]
     });
   }
 
