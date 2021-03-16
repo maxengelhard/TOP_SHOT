@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Stripe Checkout Sample</title>
-    <meta name="description" content="A demo of Stripe Payment Intents" />
+    <title>Get Drop Now</title>
+    <meta name="description" content="Get Drop Now" />
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./img//logodope.png" type="image/x-icon" />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/global.css" />
     <!-- Load Stripe.js on your website. -->
@@ -18,19 +18,23 @@
     <div class="sr-root">
       <div class="sr-main">
         <header class="sr-header">
-          <div class="sr-header__logo"></div>
+          <img src='/img/logodope.png' 
+          width="120"
+          height="120"/>
         </header>
-        <h1>Choose a collaboration plan</h1>
+        <main>
+        <h1>Be The First To Get Notified Of Drops</h1>
+        <h3>You Could Be The Next Winner Of <a target="_blank" rel="noopener noreferrer" href='https://www.nbatopshot.com/moment/jesse+0189f1e3-a5e9-48a4-909b-2e0886777f2b'>$208,000</a></h3>
+        <br>
 
         <div class="price-table-container">
           <section>
             <img
-              src="/img/starter.png"
+              src="/img/baller.png"
               width="120"
               height="120"
             />
-            <div class="name">Starter</div>
-            <div class="price">$18</div>
+            <div class="price">$5</div>
             <div class="duration">per month</div>
             <button id="basic-plan-btn">Select</button>
           </section>
@@ -38,6 +42,12 @@
       </div>
     </div>
     <div id="error-message" class="error-message"></div>
-    <div class='billing' onclick="myhref('managebilling')">Already Have An Account?</div>
+    <button class='billing' onclick="myhref('managebilling')">Already Have An Account?</button>
+    <!-- <div class="howItWorks">
+      <h2>How It Works</h2>
+
+    </div> -->
+  </main>
+    </body>
   </body>
 </html>

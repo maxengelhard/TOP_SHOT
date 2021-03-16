@@ -37,3 +37,6 @@ target/
 
 # zip files
 *.zip
+
+# images
+*.png

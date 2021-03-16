@@ -62,8 +62,10 @@ h4 {
   padding: 48px 20px;
 }
 .sr-header {
-  margin-top: 64px;
-  margin-bottom: 32px;
+position: absolute;
+top: 2%;
+left: 10%;
+
 }
 .sr-payment-summary {
   margin-bottom: 20px;
@@ -355,13 +357,14 @@ pre {
   .sr-main {
     width: auto;
   }
+
 }
 
 /* Pasha styles – Brand-overrides, can split these out */
 :root {
-  --accent-color: var(--green-dark);
+  --accent-color: var(--green-mid);
   --headline-color: #ffffff;
-  --logo-image: url("data:image/svg+xml,%3Csvg width='32' height='28' viewBox='0 0 16 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.40358 1.55571L7.722 1.87582L3.30011 6.32961L3.57398 6.60538C4.70712 7.74639 6.54431 7.74639 7.67745 6.60538L9.4193 4.85144C9.61768 4.65441 9.93426 4.6555 10.1288 4.85144L13.648 8.39482L8.70576 13.3727C8.31658 13.7646 7.68342 13.7668 7.29155 13.3776L7.28666 13.3727L1.47736 7.52309C-0.15912 5.87524 -0.15912 3.20355 1.47736 1.55571C3.11384 -0.0921372 5.7671 -0.0921372 7.40358 1.55571Z' fill='white' stroke='%23009688' stroke-width='0.5'%3E%3C/path%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9.4191 4.2999L7.40339 6.32961C6.4215 7.31832 4.82955 7.31832 3.84766 6.32961L8.58863 1.55571C10.2251 -0.0921372 12.8784 -0.0921372 14.5149 1.55571C16.1513 3.20355 16.1513 5.87524 14.5149 7.52309L13.9222 8.11982L10.1287 4.2999C9.93407 4.10396 9.61749 4.10287 9.42155 4.29745C9.42073 4.29826 9.41992 4.29908 9.4191 4.2999Z' fill='white' stroke='%23009688' stroke-width='0.5'%3E%3C/path%3E%3C/svg%3E");
+  --logo-image: url('./getdropnow.png')
 }
 
 .togethere-background {
@@ -369,13 +372,11 @@ pre {
   top: 0;
   left: 0;
   right: 0;
-  background-color: var(--green-mid);
+  background-color: var(--black-mid);
   height: 275px;
 }
 
 .sr-header__logo:after {
-  content: "togethere";
-  padding-left: 32px;
   display: block;
   color: white;
   font-size: 22px;
@@ -383,11 +384,24 @@ pre {
 }
 
 .sr-main h1 {
+  margin-top: 10px;
   font-size: x-large;
   color: #ffffff;
   font-weight: 600;
   margin-bottom: 32px;
   text-align: center;
+}
+
+.sr-main h3 {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.sr-main a {
+  text-decoration: none;
+  color: yellowgreen;
 }
 
 .price-table-container {
@@ -396,6 +410,7 @@ pre {
 }
 
 .price-table-container section {
+  margin: auto;
   border-radius: 6px;
   padding: 32px 28px;
   display: flex;
@@ -636,15 +651,23 @@ input[type="number"]::-webkit-outer-spin-button {
   top: 5%;
   right: 5%;
   padding: 5px;
-  background-color: white;
+  background-color: var(--green-dark);
   cursor: pointer;
   font-weight: bolder;
-}
 
-.billing:hover{
-  background-color: var(--green-light);
+}
+.billing:hover {
+  background-color: var(--green-mid);
 }
 
 form input {
   margin: 3px 0px;
+}
+
+main {
+  margin-top: 140px;
+}
+
+@media (max-width: 850px) {
+  
 }

@@ -267,7 +267,6 @@ app.post('/getusers', async (req,res) => {
   
     dynamoDb.get(params, (error,data) => {
       if (error) {
-        console.log(error);
         res.status(400).json({ error: 'Could not get user' });
       } else {
         // check to see if the email matches
