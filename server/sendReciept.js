@@ -6,7 +6,6 @@ const unsubscribed = require('./unsubscribed')
 const reactivateEmail = require('./reactivateEmail')
 const updateEmailAddress = require('./updateEmail')
 
-
 const SESConfig = {
   apiVersion: '2010-12-01',
   accessKeyId: process.env.REACT_APP_AWS_SES_ACCESS_KEY_ID,

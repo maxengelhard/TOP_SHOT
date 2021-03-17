@@ -41,11 +41,22 @@ app.use(
 const USERS_TABLE = process.env.USERS_TABLE;
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
+s3 = new AWS.S3({apiVersion: '2006-03-01'});
+
 app.get("/", (req, res) => {
   // const filePath = path.resolve(process.env.STATIC_DIR + "/index.html");
   const pathName = path.join(__dirname, 'client', 'index.html');
   res.sendFile(pathName);
 });
+
+app.get('/logo', async (req,res) => {
+  try {
+    
+  } 
+  catch(error) {
+    console.log(error)
+  }
+})
 
 
 // Fetch the Checkout Session to display the JSON result on the success page

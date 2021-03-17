@@ -85,23 +85,23 @@ const reactivateEmail = () => {
 +`<table border="0" cellpadding="0" cellspacing="0" width="100%">`
 +`    <!-- LOGO -->`
 +`    <tr>`
-+`        <td bgcolor="#FFA73B" align="center">`
++`        <td bgcolor="#009688" align="center">`
 +`            <!--[if (gte mso 9)|(IE)]>`
 +`            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">`
 +`            <tr>`
 +`            <td align="center" valign="top" width="600">`
 +`            <![endif]-->`
-+`            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >`
-+`                <tr>`
-+`                    <td align="center" valign="top" style="padding: 40px 10px 40px 10px;">`
-+`                        <a href=${process.env.DOMAIN} target="_blank">`
-+`                            my logo`
-+`                        </a>`
-+`                    </td>`
-+`                </tr>`
-+`            </table>`
-+`            <!--[if (gte mso 9)|(IE)]>`
-+`            </td>`
++ `<table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >`
++ `             <tr>`
++  `                  <td align="center" valign="top" style="padding: 40px 10px 40px 10px;">`
++   `                     <a href="https://getdropnow.com" target="_blank">`
++    `                        <img alt="Get Drop Now" src="https://s3.us-east-2.amazonaws.com/top-shot-images/theseImages%2Flogodope.png" width="100" height="100" style="display: block; sfont-family: 'Lato', Helvetica, Arial, sans-serif; color: #ffffff; font-size: 18px;" border="0">`
++     `                  </a>`
++      `              </td>`
++       `         </tr>`
++        `    </table>`
++`          <!--[if (gte mso 9)|(IE)]>`
++`        </td>`
 +`            </tr>`
 +`            </table>`
 +`            <![endif]-->`
@@ -109,7 +109,7 @@ const reactivateEmail = () => {
 +`    </tr>`
 +`    <!-- HERO -->`
 +`    <tr>`
-+`        <td bgcolor="#FFA73B" align="center" style="padding: 0px 10px 0px 10px;">`
++`        <td bgcolor="#009688" align="center" style="padding: 0px 10px 0px 10px;">`
 +`            <!--[if (gte mso 9)|(IE)]>`
 +`            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">`
 +`            <tr>`
