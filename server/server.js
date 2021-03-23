@@ -87,7 +87,7 @@ app.get("/checkout-session", async (req, res) => {
       res.status(400).json({ error: 'Could not create user' });
     }
     if (!data.Attributes) {
-    sendRecipet(email,customer,amount_total,process.env.DOMAIN+'/managebilling')
+    sendRecipet(email,customer,amount_total,process.env.DOMAIN+'managebilling')
     }
   });
 
