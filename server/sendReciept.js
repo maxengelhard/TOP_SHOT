@@ -20,7 +20,7 @@ const sendReciept = async (email,customerId,amount,billing,updated) => {
     let thisEmail = ''
     let subject = ''
   if (!updated) {
-    thisEmail = receiptHTML('Get Drop Now',customerId,prettyAmount,billing,'https://www.nbatopshot.com/')
+    thisEmail = receiptHTML('Get Drop Now',customerId,prettyAmount,billing,process.env.DOMAIN+'help','https://www.nbatopshot.com/')
     subject = 'Thank you! Here is your receipt'
   } else if (updated ==='cancel') {
     thisEmail = unsubscribed() 
